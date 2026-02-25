@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog — Vexora</title>
+<meta name="description" content="Full version history and release notes for Vexora Launcher.">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ── CHANGELOG-ONLY STYLES ───────────────────────────────────── */
+
+.cl-list {
+  display: flex; flex-direction: column;
+  border-top: 1px solid var(--border);
+  margin-top: 56px;
+}
+
+.cl-entry {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+/* Vertical timeline line */
+.cl-entry::before {
+  content: '';
+  position: absolute;
+  left: 180px;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.cl-meta {
+  padding: 36px 32px 36px 0;
+  position: relative;
+}
+
+/* Timeline dot */
+.cl-meta::after {
+  content: '';
+  position: absolute;
+  right: -5px; top: 44px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(108,139,255,0.5);
+  border: 2px solid var(--bg);
+  z-index: 1;
+}
+
+.cl-version {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
+  color: var(--accent); margin-bottom: 6px;
+}
+.cl-date {
+  font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 10px;
+}
+
+.cl-body {
+  padding: 36px 0 36px 40px;
+}
+.cl-title {
+  font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 16px;
+}
+.cl-items { display: flex; flex-direction: column; gap: 8px; }
+.cl-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 0.78rem; color: var(--muted2); line-height: 1.55;
+}
+.cl-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 6px;
+}
+.cl-dot.add    { background: var(--green); box-shadow: 0 0 5px rgba(52,211,153,0.4); }
+.cl-dot.fix    { background: var(--amber); box-shadow: 0 0 5px rgba(245,158,11,0.4); }
+.cl-dot.change { background: var(--accent); box-shadow: 0 0 5px rgba(108,139,255,0.4); }
+.cl-dot.break  { background: var(--danger); box-shadow: 0 0 5px rgba(248,113,113,0.4); }
+
+/* Legend */
+.cl-legend {
+  display: flex; gap: 20px; flex-wrap: wrap;
+  margin-top: 12px; margin-bottom: 56px;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 0.65rem; color: var(--muted); letter-spacing: 0.08em;
+}
+.legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+/* Future entry placeholder style */
+.cl-entry.future .cl-meta::after { background: var(--surface3); box-shadow: none; }
+.cl-entry.future .cl-version { color: var(--muted2); }
+.cl-entry.future .cl-title { color: var(--muted2); }
+
+@media (max-width: 700px) {
+  .cl-entry { grid-template-columns: 1fr; }
+  .cl-entry::before { display: none; }
+  .cl-meta { padding: 28px 0 8px; }
+  .cl-meta::after { display: none; }
+  .cl-body { padding: 0 0 28px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+<div class="nebula nebula-a"></div>
+<div class="nebula nebula-b"></div>
+<div class="nebula nebula-c"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 32 32" fill="none">
+      <polygon points="16,2 28,9 28,23 16,30 4,23 4,9" fill="none" stroke="url(#ng)" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="5" fill="url(#ng)"/>
+      <defs><linearGradient id="ng" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#6c8bff"/><stop offset="100%" stop-color="#a78bfa"/>
+      </linearGradient></defs>
+    </svg>
+    <span class="nav-logo-text">VEXORA</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html"     class="nav-link" data-page="index.html">Home</a>
+    <a href="about.html"     class="nav-link" data-page="about.html">About</a>
+    <a href="changelog.html" class="nav-link active" data-page="changelog.html">Changelog</a>
+    <a href="download.html"  class="nav-link" data-page="download.html">Download</a>
+    <a href="download.html"  class="nav-cta">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download
+    </a>
+  </div>
+  <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html"     class="nav-link" onclick="toggleMobile()">Home</a>
+  <a href="about.html"     class="nav-link" onclick="toggleMobile()">About</a>
+  <a href="changelog.html" class="nav-link" onclick="toggleMobile()">Changelog</a>
+  <a href="download.html"  class="nav-link" onclick="toggleMobile()">Download</a>
+  <a href="download.html"  class="nav-cta"  onclick="toggleMobile()">Download</a>
+</div>
+
+<!-- ── PAGE HERO ──────────────────────────────────────────────── -->
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero-label reveal">Release History</div>
+    <h1 class="page-hero-title reveal reveal-d1">What's <span>Changed</span></h1>
+    <p class="page-hero-desc reveal reveal-d2">
+      Every update, every fix, every addition — documented as it ships.
+    </p>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+
+    <!-- Legend -->
+    <div class="cl-legend reveal">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> New Feature</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div> Bug Fix</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> Change</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--danger)"></div> Breaking</div>
+    </div>
+
+    <div class="cl-list">
+
+      <!-- v1.1.4 — LATEST -->
+      <div class="cl-entry reveal">
+        <div class="cl-meta">
+          <div class="cl-version">v1.1.4</div>
+          <div class="cl-date"><!-- PLACEHOLDER: e.g. February 2025 --></div>
+          <span class="badge badge-green"><span class="badge-dot"></span> Latest</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-title">Microsoft Auth + Utilities Panel</div>
+          <div class="cl-items">
+            <div class="cl-item"><div class="cl-dot add"></div>Microsoft OAuth 2.0 Device Code Flow authentication</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Xbox Live → XSTS → Minecraft Services token chain</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Utilities panel with working search and back navigation</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Timer utility — stopwatch (with laps) and countdown mode</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Notes utility — rich text editor with fonts, colors, auto-save</div>
+            <div class="cl-item"><div class="cl-dot add"></div>PIN lock screen — set, edit, and remove with hash storage</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Status modes — Online, Offline, Do Not Disturb</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed blank screen after intro animation (double-async syntax error)</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed MS auth endpoint (migrated from deprecated login.live.com to login.microsoftonline.com)</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed RpsTicket missing d= prefix for AAD tokens</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed auth/pin screens rendering behind titlebar (z-index)</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed intro animation glitch caused by layering conflict</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- v1.1.0 -->
+      <div class="cl-entry reveal">
+        <div class="cl-meta">
+          <div class="cl-version">v1.1.0</div>
+          <div class="cl-date"><!-- PLACEHOLDER: date --></div>
+          <span class="badge badge-blue">Stable</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-title">UI Controls & Performance Settings</div>
+          <div class="cl-items">
+            <div class="cl-item"><div class="cl-dot add"></div>UI Scale slider in Appearance settings (75–125% in 5% steps)</div>
+            <div class="cl-item"><div class="cl-dot add"></div>FPS Cap slider — 30 / 60 / 90 / 120 FPS presets + Uncapped toggle</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Starfield renderer patched with timestamp-based frame throttling</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Notifications panel — position grid, style (Default/Minimal/Pill/Banner), font picker</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Toast notification system rewrite with positional CSS classes</div>
+            <div class="cl-item"><div class="cl-dot change"></div>Version series moved to v1.1.x</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- v0.1.0 -->
+      <div class="cl-entry reveal">
+        <div class="cl-meta">
+          <div class="cl-version">v0.1.0</div>
+          <div class="cl-date"><!-- PLACEHOLDER: date --></div>
+        </div>
+        <div class="cl-body">
+          <div class="cl-title">Initial Release</div>
+          <div class="cl-items">
+            <div class="cl-item"><div class="cl-dot add"></div>HTML → Electron migration with custom frameless titlebar</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Launcher auth — register and sign in with local account</div>
+            <div class="cl-item"><div class="cl-dot add"></div>AppData persistence via Electron IPC (store-get / store-set)</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Animated starfield background with responsive canvas</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Settings panel — theme, appearance, privacy</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Performance panel</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Cache / Data panel with clear controls</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Profile panel with display name editing</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Discover panel with category navigation</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Boot sequence — intro animation → optional PIN → auth → app</div>
+          </div>
+        </div>
+      </div>
+
+      <!--
+        PLACEHOLDER: Add future entries here as you ship new versions.
+        Copy this block and fill it in:
+
+      <div class="cl-entry reveal">
+        <div class="cl-meta">
+          <div class="cl-version">v1.2.0</div>
+          <div class="cl-date">Month Year</div>
+          <span class="badge badge-green"><span class="badge-dot"></span> Latest</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-title">Release Title</div>
+          <div class="cl-items">
+            <div class="cl-item"><div class="cl-dot add"></div>Feature added</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Bug fixed</div>
+            <div class="cl-item"><div class="cl-dot change"></div>Thing changed</div>
+          </div>
+        </div>
+      </div>
+      -->
+
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg viewBox="0 0 32 32" fill="none">
+            <polygon points="16,2 28,9 28,23 16,30 4,23 4,9" fill="none" stroke="url(#fg)" stroke-width="1.5"/>
+            <circle cx="16" cy="16" r="5" fill="url(#fg)"/>
+            <defs><linearGradient id="fg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#6c8bff"/><stop offset="100%" stop-color="#a78bfa"/>
+            </linearGradient></defs>
+          </svg>
+          <span class="footer-logo-text">VEXORA</span>
+        </div>
+        <p class="footer-tagline"><!-- PLACEHOLDER: tagline --></p>
+      </div>
+      <div>
+        <div class="footer-col-title">Pages</div>
+        <div class="footer-links">
+          <a href="index.html" class="footer-link">Home</a>
+          <a href="about.html" class="footer-link">About</a>
+          <a href="changelog.html" class="footer-link">Changelog</a>
+          <a href="download.html" class="footer-link">Download</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Links</div>
+        <div class="footer-links">
+<a href="https://github.com/jp230214" class="footer-link">GitHub</a>
+          <a href="https://www.youtube.com/@VexOfficial_MC" class="footer-link">Youtube</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy"><!-- PLACEHOLDER: © 2025 Your Name. --> Not affiliated with Mojang or Microsoft.</span>
+      <span class="footer-legal">Minecraft is a trademark of Mojang Studios.<br>Vexora is an independent third-party launcher.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

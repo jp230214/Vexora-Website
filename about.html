@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Vexora</title>
+<meta name="description" content="The story behind Vexora — why it was built and what makes it different.">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ── ABOUT-ONLY STYLES ───────────────────────────────────────── */
+
+/* Animated hex logo */
+.hex-wrap {
+  display: flex; align-items: center; justify-content: center;
+  position: relative; padding: 40px;
+}
+.hex-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle, rgba(108,139,255,0.14) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hex-svg {
+  position: relative; z-index: 1;
+  animation: hexFloat 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 40px rgba(108,139,255,0.35));
+}
+@keyframes hexFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-14px);} }
+
+/* Stats row */
+.stats-row {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  margin: 64px 0;
+}
+.stat-cell {
+  background: var(--surface2);
+  padding: 32px 24px; text-align: center;
+}
+.stat-val {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.2rem; font-weight: 900; line-height: 1;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.stat-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+
+/* Two-col story */
+.story-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+  margin-bottom: 80px;
+}
+.story-text h3 {
+  font-family: 'Orbitron', monospace; font-size: 0.8rem;
+  font-weight: 700; letter-spacing: 0.12em; color: var(--accent);
+  text-transform: uppercase; margin-bottom: 14px;
+}
+.story-text p {
+  font-size: 0.88rem; color: var(--muted2); line-height: 1.85;
+  margin-bottom: 18px;
+}
+.story-text p:last-child { margin-bottom: 0; }
+
+/* Tech stack */
+.tech-section { margin-bottom: 80px; }
+.tech-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 32px; }
+.tech-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 16px; text-align: center;
+  transition: all 0.25s;
+}
+.tech-card:hover { border-color: rgba(108,139,255,0.3); transform: translateY(-2px); }
+.tech-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.tech-name { font-size: 0.72rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.tech-desc { font-size: 0.62rem; color: var(--muted); line-height: 1.5; }
+
+/* Values */
+.values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+.value-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px;
+  display: flex; align-items: flex-start; gap: 14px;
+  transition: all 0.25s;
+}
+.value-card:hover { border-color: rgba(108,139,255,0.25); }
+.value-icon {
+  width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+  background: rgba(108,139,255,0.1); border: 1px solid rgba(108,139,255,0.18);
+  display: flex; align-items: center; justify-content: center; font-size: 1rem;
+}
+.value-title { font-size: 0.8rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.value-desc { font-size: 0.74rem; color: var(--muted2); line-height: 1.7; }
+
+/* Tags */
+.tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+.tag {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 5px 12px;
+  font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted2); font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .story-grid { grid-template-columns: 1fr; gap: 48px; }
+  .tech-grid { grid-template-columns: 1fr 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .tech-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+<div class="nebula nebula-a"></div>
+<div class="nebula nebula-b"></div>
+<div class="nebula nebula-c"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 32 32" fill="none">
+      <polygon points="16,2 28,9 28,23 16,30 4,23 4,9" fill="none" stroke="url(#ng)" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="5" fill="url(#ng)"/>
+      <defs><linearGradient id="ng" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#6c8bff"/><stop offset="100%" stop-color="#a78bfa"/>
+      </linearGradient></defs>
+    </svg>
+    <span class="nav-logo-text">VEXORA</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html"     class="nav-link" data-page="index.html">Home</a>
+    <a href="about.html"     class="nav-link active" data-page="about.html">About</a>
+    <a href="changelog.html" class="nav-link" data-page="changelog.html">Changelog</a>
+    <a href="download.html"  class="nav-link" data-page="download.html">Download</a>
+    <a href="download.html"  class="nav-cta">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download
+    </a>
+  </div>
+  <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html"     class="nav-link" onclick="toggleMobile()">Home</a>
+  <a href="about.html"     class="nav-link" onclick="toggleMobile()">About</a>
+  <a href="changelog.html" class="nav-link" onclick="toggleMobile()">Changelog</a>
+  <a href="download.html"  class="nav-link" onclick="toggleMobile()">Download</a>
+  <a href="download.html"  class="nav-cta"  onclick="toggleMobile()">Download</a>
+</div>
+
+<!-- ── PAGE HERO ──────────────────────────────────────────────── -->
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero-label reveal">About</div>
+    <h1 class="page-hero-title reveal reveal-d1">Built <span>differently.</span></h1>
+    <p class="page-hero-desc reveal reveal-d2">
+      <!-- PLACEHOLDER: One-liner about the project. Why does Vexora exist? -->
+      The story behind a launcher that started as a personal project and became something worth sharing.
+    </p>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+
+    <!-- Hex visual + stats -->
+    <div class="hex-wrap reveal">
+      <div class="hex-glow"></div>
+      <svg class="hex-svg" width="160" height="160" viewBox="0 0 200 200" fill="none">
+        <polygon points="100,8 184,54 184,146 100,192 16,146 16,54" fill="none" stroke="url(#hg)" stroke-width="1.2" opacity="0.35"/>
+        <polygon points="100,28 168,70 168,130 100,172 32,130 32,70" fill="none" stroke="url(#hg)" stroke-width="1" opacity="0.22"/>
+        <polygon points="100,48 152,82 152,118 100,152 48,118 48,82" fill="rgba(108,139,255,0.05)" stroke="url(#hg)" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="26" fill="url(#hg)" opacity="0.95"/>
+        <circle cx="100" cy="100" r="13" fill="white" opacity="0.12"/>
+        <defs>
+          <linearGradient id="hg" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#6c8bff"/>
+            <stop offset="100%" stop-color="#a78bfa"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row reveal">
+      <div class="stat-cell">
+        <!-- PLACEHOLDER: Replace with real download count when you have one -->
+        <div class="stat-val">Free</div>
+        <div class="stat-label">Always & Forever</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val">v1.1.4</div>
+        <div class="stat-label">Current Version</div>
+      </div>
+      <div class="stat-cell">
+        <!-- PLACEHOLDER: e.g. number of features, instances supported, etc. -->
+        <div class="stat-val">Win</div>
+        <div class="stat-label">Windows 10 / 11</div>
+      </div>
+    </div>
+
+    <!-- Story -->
+    <div class="story-grid">
+      <div class="story-text reveal">
+        <h3>Why Vexora?</h3>
+        <p>
+          <!-- PLACEHOLDER: Your real story. Why did you start building this?
+          What frustrated you about existing launchers? Keep it personal and direct.
+          Example: "I got tired of every launcher either looking like it was built in 2012 or being so bloated
+          it took longer to open than the game itself. I wanted something clean, fast, and actually mine." -->
+          The reason i started Vexora was mainly because at the time, i felt like there was no truly good launcher. All either had ads, ran horribly, or was incredibly bloated.
+        </p>
+        <p>
+          <!-- PLACEHOLDER: What the project means to you, or what's driving development. -->
+          I wanted to keep going and make this a good Launcher for personal use and also because my friends had saw it, and they told me that they thought it could go popular, or that it could be a good Launcher one day. That motivated me to keep going.
+        </p>
+      </div>
+      <div class="story-text reveal reveal-d2">
+        <h3>Where it's going</h3>
+        <p>
+          <!-- PLACEHOLDER: Your roadmap in plain language. What's coming next?
+          Examples: actual game launching, mod support, auto-updater, custom themes, etc. -->
+         I want to make this a launcher with a massive community and also with a great playerbase using it. I believe that one day this could really all be worth it. As of now, we have quite large features being built, we are working on Mac and Linux support for this Launcher, and also working on adding in-game features such as a icon beside their name.
+        </p>
+        <p>
+          <!-- PLACEHOLDER: Anything about community, feedback, contributions, etc. -->
+          I have a GitHub for the website, I plan to make this Launcher open-source but not right now. I also have a YT channel and discord where you can report bugs.
+        </p>
+        <div class="tags">
+          <span class="tag">Open-Source</span>
+          <span class="tag">Windows</span>
+          <span class="tag">Free</span>
+          <span class="tag">No Ads</span>
+          <span class="tag">Listens to community</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="tech-section">
+      <div class="label reveal">Under the Hood</div>
+      <h2 class="section-title reveal reveal-d1">The tech <span>stack</span></h2>
+      <div class="tech-grid">
+        <div class="tech-card reveal">
+          <div class="tech-icon">⚡</div>
+          <div class="tech-name">Electron</div>
+          <div class="tech-desc">Native desktop app built on web tech</div>
+        </div>
+        <div class="tech-card reveal reveal-d1">
+          <div class="tech-icon">🌐</div>
+          <div class="tech-name">HTML / CSS / JS</div>
+          <div class="tech-desc">Pure vanilla — no framework overhead</div>
+        </div>
+        <div class="tech-card reveal reveal-d2">
+          <div class="tech-icon">🔒</div>
+          <div class="tech-name">MS OAuth 2.0</div>
+          <div class="tech-desc">Device Code Flow for secure Minecraft auth</div>
+        </div>
+        <div class="tech-card reveal reveal-d3">
+          <div class="tech-icon">💾</div>
+          <div class="tech-name">Local Storage</div>
+          <div class="tech-desc">All data stays on your machine, always</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Values -->
+    <div>
+      <div class="label reveal">What We Stand For</div>
+      <h2 class="section-title reveal reveal-d1">Built on <span>principles</span></h2>
+      <div class="values-grid">
+        <div class="value-card reveal">
+          <div class="value-icon">🔒</div>
+          <div>
+            <div class="value-title">Privacy First</div>
+            <p class="value-desc">Your Minecraft credentials go direct to Microsoft. Vexora never sees them, never stores them, never touches them.</p>
+          </div>
+        </div>
+        <div class="value-card reveal reveal-d1">
+          <div class="value-icon">🆓</div>
+          <div>
+            <div class="value-title">Free Forever</div>
+            <p class="value-desc">No paid tiers, no subscriptions, no ads. I believe that all of these things ruin launchers. Mine will be a truly Free Launcher with no Loopholes.</p>
+          </div>
+        </div>
+        <div class="value-card reveal reveal-d2">
+          <div class="value-icon">🎨</div>
+          <div>
+            <div class="value-title">Design Matters</div>
+            <p class="value-desc">A launcher is something you open every time you play. It should look and feel good, not like an afterthought.</p>
+          </div>
+        </div>
+        <div class="value-card reveal reveal-d3">
+          <div class="value-icon">🛠</div>
+          <div>
+            <div class="value-title">Community</div>
+            <p class="value-desc">I believe Communitys is one of the most important things that any minecraft Launcher or Mod should have. If we have a good community, thats how we can expand features and make our Launcher better for Everyone.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg viewBox="0 0 32 32" fill="none">
+            <polygon points="16,2 28,9 28,23 16,30 4,23 4,9" fill="none" stroke="url(#fg)" stroke-width="1.5"/>
+            <circle cx="16" cy="16" r="5" fill="url(#fg)"/>
+            <defs><linearGradient id="fg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#6c8bff"/><stop offset="100%" stop-color="#a78bfa"/>
+            </linearGradient></defs>
+          </svg>
+          <span class="footer-logo-text">VEXORA</span>
+        </div>
+        <p class="footer-tagline"><!-- PLACEHOLDER: tagline --></p>
+      </div>
+      <div>
+        <div class="footer-col-title">Pages</div>
+        <div class="footer-links">
+          <a href="index.html" class="footer-link">Home</a>
+          <a href="about.html" class="footer-link">About</a>
+          <a href="changelog.html" class="footer-link">Changelog</a>
+          <a href="download.html" class="footer-link">Download</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Links</div>
+        <div class="footer-links">
+ <a href="https://github.com/jp230214" class="footer-link">GitHub</a>
+          <a href="https://www.youtube.com/@VexOfficial_MC" class="footer-link">Youtube</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy"><!-- PLACEHOLDER: © 2025 Your Name. --> Not affiliated with Mojang or Microsoft.</span>
+      <span class="footer-legal">Minecraft is a trademark of Mojang Studios.<br>Vexora is an independent third-party launcher.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

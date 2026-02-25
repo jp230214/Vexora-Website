@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download — Vexora</title>
+<meta name="description" content="Download Vexora Launcher for Windows. Free, no account required to install.">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ── DOWNLOAD-ONLY STYLES ────────────────────────────────────── */
+
+/* Download hero card */
+.dl-hero {
+  padding: 160px 0 80px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.dl-hero-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 64px;
+}
+.dl-card {
+  background: var(--surface2);
+  border: 1px solid rgba(108,139,255,0.22);
+  border-radius: 20px; padding: 36px;
+  position: relative; overflow: hidden;
+}
+.dl-card::before {
+  content: ''; position: absolute;
+  top: -80px; right: -80px;
+  width: 240px; height: 240px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(108,139,255,0.1), transparent 70%);
+}
+.dl-version-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.22);
+  border-radius: 100px; padding: 4px 12px;
+  font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--green); font-weight: 700; margin-bottom: 18px;
+}
+.dl-version-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
+.dl-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.15rem; font-weight: 900; letter-spacing: 0.06em;
+  color: var(--text); margin-bottom: 8px;
+}
+.dl-sub { font-size: 0.78rem; color: var(--muted2); margin-bottom: 28px; line-height: 1.7; }
+/* The actual download button linking to VexoraSetup.exe in same folder */
+.dl-btn {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff; border: none; border-radius: 12px;
+  padding: 17px 24px;
+  font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s;
+  box-shadow: 0 0 32px rgba(108,139,255,0.28);
+  text-decoration: none;
+}
+.dl-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(108,139,255,0.5); }
+.dl-specs {
+  display: flex; gap: 0; margin-top: 14px; flex-wrap: wrap;
+}
+.dl-spec {
+  font-size: 0.63rem; color: var(--muted); letter-spacing: 0.05em;
+  padding-right: 12px; margin-right: 12px;
+  border-right: 1px solid var(--border2);
+}
+.dl-spec:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+
+/* Requirements table */
+.req-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 32px; }
+.req-cell { background: var(--surface2); padding: 16px 20px; }
+.req-label { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.req-val { font-size: 0.82rem; color: var(--text); font-weight: 600; }
+
+/* Steps */
+.steps-section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+.steps-grid { display: flex; flex-direction: column; gap: 0; margin-top: 48px; }
+.step {
+  display: flex; gap: 28px; align-items: flex-start;
+  padding: 32px 0; border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.step:last-child { border-bottom: none; }
+.step-num-wrap { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+.step-num {
+  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(108,139,255,0.1); border: 1px solid rgba(108,139,255,0.22);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', monospace; font-size: 0.72rem; font-weight: 700; color: var(--accent);
+}
+.step-line { width: 1px; flex: 1; min-height: 24px; background: var(--border); margin-top: 8px; }
+.step:last-child .step-line { display: none; }
+.step-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.step-desc { font-size: 0.8rem; color: var(--muted2); line-height: 1.75; }
+.step-note {
+  margin-top: 12px;
+  background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.18);
+  border-radius: 8px; padding: 10px 14px;
+  font-size: 0.72rem; color: var(--amber); line-height: 1.6;
+}
+.step-note strong { font-weight: 700; }
+
+/* FAQ */
+.faq-section { padding: 80px 0; }
+.faq-list { margin-top: 48px; display: flex; flex-direction: column; gap: 0; }
+.faq-item {
+  border-bottom: 1px solid var(--border); padding: 24px 0;
+  cursor: pointer;
+}
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-q {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  font-size: 0.88rem; font-weight: 600; color: var(--text);
+  user-select: none;
+}
+.faq-arrow {
+  flex-shrink: 0; width: 20px; height: 20px;
+  color: var(--muted); transition: transform 0.25s;
+}
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-a {
+  font-size: 0.8rem; color: var(--muted2); line-height: 1.8;
+  max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s;
+}
+.faq-item.open .faq-a { max-height: 300px; padding-top: 14px; }
+
+@media (max-width: 900px) {
+  .dl-hero-inner { grid-template-columns: 1fr; }
+  .req-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+<div class="nebula nebula-a"></div>
+<div class="nebula nebula-b"></div>
+<div class="nebula nebula-c"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 32 32" fill="none">
+      <polygon points="16,2 28,9 28,23 16,30 4,23 4,9" fill="none" stroke="url(#ng)" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="5" fill="url(#ng)"/>
+      <defs><linearGradient id="ng" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#6c8bff"/><stop offset="100%" stop-color="#a78bfa"/>
+      </linearGradient></defs>
+    </svg>
+    <span class="nav-logo-text">VEXORA</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html"     class="nav-link" data-page="index.html">Home</a>
+    <a href="about.html"     class="nav-link" data-page="about.html">About</a>
+    <a href="changelog.html" class="nav-link" data-page="changelog.html">Changelog</a>
+    <a href="download.html"  class="nav-link active" data-page="download.html">Download</a>
+    <a href="download.html"  class="nav-cta">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download
+    </a>
+  </div>
+  <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html"     class="nav-link" onclick="toggleMobile()">Home</a>
+  <a href="about.html"     class="nav-link" onclick="toggleMobile()">About</a>
+  <a href="changelog.html" class="nav-link" onclick="toggleMobile()">Changelog</a>
+  <a href="download.html"  class="nav-link" onclick="toggleMobile()">Download</a>
+  <a href="download.html"  class="nav-cta"  onclick="toggleMobile()">Download</a>
+</div>
+
+<!-- ── DOWNLOAD HERO ──────────────────────────────────────────── -->
+<div class="dl-hero">
+  <div class="container">
+    <div class="dl-hero-inner">
+
+      <!-- Download card -->
+      <div class="dl-card reveal">
+        <div class="dl-version-badge">
+          <span class="dl-version-dot"></span>
+          Latest — v1.1.4
+        </div>
+        <div class="dl-title">Vexora Launcher</div>
+        <div class="dl-sub">
+          <!-- PLACEHOLDER: Add file size once you have a built EXE e.g. "Windows 10/11 · 64-bit · ~85 MB" -->
+          Windows 10/11 · 64-bit · ~XX MB · Free
+        </div>
+        <!--
+          HOW TO HOST: Put VexoraSetup.exe in the same folder as these HTML files.
+          The href below will serve it directly as a download.
+        -->
+        <a href="VexoraSetup.exe" download class="dl-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download for Windows
+        </a>
+        <div class="dl-specs">
+          <span class="dl-spec">Windows 10 / 11</span>
+          <span class="dl-spec">64-bit</span>
+          <span class="dl-spec">Free</span>
+          <!-- PLACEHOLDER: Add SHA256 checksum once you have one -->
+        </div>
+        <div class="req-grid" style="margin-top:24px">
+          <div class="req-cell">
+            <div class="req-label">OS</div>
+            <div class="req-val">Windows 10/11 (64-bit)</div>
+          </div>
+          <div class="req-cell">
+            <div class="req-label">RAM</div>
+            <!-- PLACEHOLDER: Real minimum RAM -->
+            <div class="req-val">4 GB minimum</div>
+          </div>
+          <div class="req-cell">
+            <div class="req-label">Java</div>
+            <div class="req-val">Bundled / auto-detected</div>
+          </div>
+          <div class="req-cell">
+            <div class="req-label">Account</div>
+            <div class="req-val">Microsoft (for playing)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right info -->
+      <div class="reveal reveal-d2">
+        <div class="label">Get Started</div>
+        <h1 class="section-title" style="font-size:clamp(1.5rem,3vw,2.4rem)">Up and running in <span>60 seconds</span></h1>
+        <p class="section-desc" style="margin-top:12px">
+          Download, install, sign in with Microsoft. That's it. You don't even need an account to get the launcher — only when you want to play.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── INSTALL STEPS ──────────────────────────────────────────── -->
+<div class="steps-section">
+  <div class="container">
+    <div class="label reveal">Installation</div>
+    <h2 class="section-title reveal reveal-d1">Step by <span>step</span></h2>
+    <div class="steps-grid">
+
+      <div class="step reveal">
+        <div class="step-num-wrap">
+          <div class="step-num">01</div>
+          <div class="step-line"></div>
+        </div>
+        <div>
+          <div class="step-title">Download the installer</div>
+          <p class="step-desc">Click the Download button above and save <code>VexoraSetup.exe</code> anywhere on your PC.</p>
+          <div class="step-note">
+            <strong>Windows SmartScreen warning?</strong> This is normal for new apps without a code-signing certificate. Click <em>"More info"</em> → <em>"Run anyway"</em> to proceed.
+          </div>
+        </div>
+      </div>
+
+      <div class="step reveal reveal-d1">
+        <div class="step-num-wrap">
+          <div class="step-num">02</div>
+          <div class="step-line"></div>
+        </div>
+        <div>
+          <div class="step-title">Create a Vexora account</div>
+          <p class="step-desc">Register with any username and email. This is your local launcher profile — stored on your machine, never on a server. You can also sign in if you've used Vexora before.</p>
+        </div>
+      </div>
+
+      <div class="step reveal reveal-d2">
+        <div class="step-num-wrap">
+          <div class="step-num">03</div>
+          <div class="step-line"></div>
+        </div>
+        <div>
+          <div class="step-title">Link your Microsoft account</div>
+          <p class="step-desc">
+            Vexora will show you a short code and open <code>microsoft.com/link</code> in your browser. Enter the code, sign in with your Microsoft account, and you're linked. Your credentials never leave Microsoft — Vexora only stores the resulting auth token.
+          </p>
+        </div>
+      </div>
+
+      <div class="step reveal reveal-d3">
+        <div class="step-num-wrap">
+          <div class="step-num">04</div>
+          <div class="step-line"></div>
+        </div>
+        <div>
+          <div class="step-title">Play!</div>
+          <p class="step-desc">
+            <!-- PLACEHOLDER: Describe launching the game once that feature is ready.
+            e.g. "Hit the + button to create a new instance, pick your Minecraft version, and click Launch." -->
+            As soon as you open the Launcher, click create instance, choose your version and loader. Its that simple. And then all you have to do is click the Play button. 
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── FAQ ───────────────────────────────────────────────────── -->
+<div class="faq-section">
+  <div class="container">
+    <div class="label reveal">FAQ</div>
+    <h2 class="section-title reveal reveal-d1">Common <span>questions</span></h2>
+    <div class="faq-list">
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          Is Vexora safe to use?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">Yes. Vexora uses the standard OAuth 2.0 Device Code Flow for Microsoft login — the same method used by the official Minecraft launcher. Your Microsoft credentials are entered directly on Microsoft's website, not in Vexora. The only thing stored locally is the auth token, which is saved to your own machine.</div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          Do I need to own Minecraft Java Edition?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">Yes. Vexora is a launcher, not a way to pirate the game. You need a legitimate Minecraft Java Edition purchase linked to your Microsoft account to play. The launcher will tell you if your account doesn't own it.</div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          Why does Windows show a security warning?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">Windows SmartScreen warns about any app that doesn't have a code-signing certificate, which costs money and requires a business entity. This warning doesn't mean the file is dangerous — it just means it's not widely distributed yet. Click "More info" then "Run anyway" to proceed. <!-- PLACEHOLDER: Remove this FAQ once you get a signing cert. --></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          Where is my data stored?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">Everything is stored locally in <code>%AppData%\Vexora Launcher\data.json</code> on your machine. Nothing is sent to any Vexora server. There are no Vexora servers.</div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <!-- PLACEHOLDER: Add your own FAQ question -->
+          Is Vexora open source?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">
+          <!-- PLACEHOLDER: Answer honestly — is it open source? Planning to be? Why or why not? -->
+         This launcher as of now, is not open-source. That is mainly because the Launcher is still in such early access. But very soon i promise to make the Launcher open-source on my Github, and also make a video of its release on my YT Channel.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg viewBox="0 0 32 32" fill="none">
+            <polygon points="16,2 28,9 28,23 16,30 4,23 4,9" fill="none" stroke="url(#fg)" stroke-width="1.5"/>
+            <circle cx="16" cy="16" r="5" fill="url(#fg)"/>
+            <defs><linearGradient id="fg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#6c8bff"/><stop offset="100%" stop-color="#a78bfa"/>
+            </linearGradient></defs>
+          </svg>
+          <span class="footer-logo-text">VEXORA</span>
+        </div>
+        <p class="footer-tagline"><!-- PLACEHOLDER: tagline --></p>
+      </div>
+      <div>
+        <div class="footer-col-title">Pages</div>
+        <div class="footer-links">
+          <a href="index.html" class="footer-link">Home</a>
+          <a href="about.html" class="footer-link">About</a>
+          <a href="changelog.html" class="footer-link">Changelog</a>
+          <a href="download.html" class="footer-link">Download</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Links</div>
+        <div class="footer-links">
+  <a href="https://github.com/jp230214" class="footer-link">GitHub</a>
+          <a href="https://www.youtube.com/@VexOfficial_MC" class="footer-link">Youtube</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy"><!-- PLACEHOLDER: © 2025 Your Name. --> Not affiliated with Mojang or Microsoft.</span>
+      <span class="footer-legal">Minecraft is a trademark of Mojang Studios.<br>Vexora is an independent third-party launcher.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+function toggleFaq(el) {
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) el.classList.add('open');
+}
+</script>
+</body>
+</html>
