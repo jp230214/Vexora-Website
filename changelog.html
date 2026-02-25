@@ -168,12 +168,37 @@
 
     <div class="cl-list">
 
-      <!-- v1.1.4 — LATEST -->
+      <!-- v1.2.0 — LATEST -->
+      <div class="cl-entry reveal">
+        <div class="cl-meta">
+          <div class="cl-version">v1.2.0</div>
+          <div class="cl-date">February 2026</div>
+          <span class="badge badge-green"><span class="badge-dot"></span> Latest</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-title">Website Launch, API Submission & Critical Fixes</div>
+          <div class="cl-items">
+            <div class="cl-item"><div class="cl-dot add"></div>Submitted form to Microsoft and Mojang requesting access to official Minecraft APIs — awaiting approval before download goes live</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Launched official Vexora website with Home, About, Download, and Changelog pages</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Added GitHub and YouTube links to website footer</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Download buttons updated to "Coming Soon" pending API approval</div>
+            <div class="cl-item"><div class="cl-dot change"></div>Updated website feature card copy — Built-in Utilities now references speedrun stopwatch use case</div>
+            <div class="cl-item"><div class="cl-dot change"></div>Filled in upcoming features card — Mac support, mod browser, auto-updater</div>
+            <div class="cl-item"><div class="cl-dot change"></div>Various text edits and copy improvements across all pages</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed critical website bug where the animated starfield canvas was not being cleared between frames, causing unbounded memory growth — on some machines this consumed 4–6 GB of RAM within minutes and crashed the browser entirely</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed launcher crash on startup caused by a race condition in the boot sequence where settings were applied before the DOM was fully ready, resulting in null reference errors that silently killed the main process</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed broken nav active state on website — current page link now correctly highlights</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed mobile menu not closing after selecting a nav item on smaller screens</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- v1.1.4 -->
       <div class="cl-entry reveal">
         <div class="cl-meta">
           <div class="cl-version">v1.1.4</div>
-          <div class="cl-date"><!-- PLACEHOLDER: e.g. February 2025 --></div>
-          <span class="badge badge-green"><span class="badge-dot"></span> Latest</span>
+          <div class="cl-date">February 2026</div>
+          <span class="badge badge-blue">Stable</span>
         </div>
         <div class="cl-body">
           <div class="cl-title">Microsoft Auth + Utilities Panel</div>
