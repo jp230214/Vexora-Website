@@ -168,12 +168,43 @@
 
     <div class="cl-list">
 
-      <!-- v1.2.0 — LATEST -->
+      <!-- v1.3.0 — LATEST -->
+      <div class="cl-entry reveal">
+        <div class="cl-meta">
+          <div class="cl-version">v1.3.0</div>
+          <div class="cl-date">March 2026</div>
+          <span class="badge badge-green"><span class="badge-dot"></span> Latest</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-title">Modrinth Integration, Fabric Launch & Dependency Resolver</div>
+          <div class="cl-items">
+            <div class="cl-item"><div class="cl-dot add"></div>Microsoft and Mojang API access approved — official authentication pipeline now fully active</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Full Modrinth mod browser integrated directly into the launcher — search, browse, and install mods, shaders, resource packs, and datapacks without leaving the app</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Content browser accessible from within any instance — automatically pre-filters results to your instance's Minecraft version and loader</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Automatic dependency resolver — when installing a mod, the launcher recursively fetches all required dependencies, deduplicates them, and shows a checkbox popup so you can choose which to install</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Already-installed dependencies shown as grayed-out in the dependency popup so you never install duplicates</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Instance detail page now has an Add Content button that opens the content browser pre-loaded for that instance</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Modrinth version picker in the detail view — browse all compatible versions and install a specific one manually</div>
+            <div class="cl-item"><div class="cl-dot add"></div>Fabric API and Mod Menu automatically downloaded and installed when creating a new Fabric instance</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed Fabric launch crash caused by duplicate ASM/Mixin classes — vanilla and Fabric loader both bundled conflicting versions; vanilla ASM is now filtered from the classpath when launching Fabric or Quilt</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed Fabric API installing the wrong version (0.2.1 instead of the correct build for the target Minecraft version) — version selection now uses per-candidate game version filtering with suffix matching</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed shaders, resource packs, and datapacks failing to install due to the version search scanning from the wrong end of the version list</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed mod install failing for projects where Modrinth's game_versions filter incorrectly returns an empty array — launcher now falls back to smart pagination with loader-aware start offset</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed create instance modal stealing focus — text field is now focused automatically when the screen opens</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed launch button on instance card not opening the detail page first before launching</div>
+            <div class="cl-item"><div class="cl-dot fix"></div>Fixed wrong loader being used when installing mods — project type is now fetched from Modrinth directly rather than inferred from the UI state</div>
+            <div class="cl-item"><div class="cl-dot change"></div>Modrinth search now always passes game version and loader as facets — results are pre-filtered to only show content compatible with the selected instance</div>
+            <div class="cl-item"><div class="cl-dot change"></div>Version fetch logic split into two separate handlers — one for the versions tab (manual browsing) and one for auto-install (fastest compatible version)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- v1.2.0 -->
       <div class="cl-entry reveal">
         <div class="cl-meta">
           <div class="cl-version">v1.2.0</div>
           <div class="cl-date">February 2026</div>
-          <span class="badge badge-green"><span class="badge-dot"></span> Latest</span>
+          <span class="badge badge-blue">Stable</span>
         </div>
         <div class="cl-body">
           <div class="cl-title">Website Launch, API Submission & Critical Fixes</div>
